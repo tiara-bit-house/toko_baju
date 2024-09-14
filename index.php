@@ -19,7 +19,11 @@
         $tambahDetailStmt = $conn->prepare("INSERT INTO detail_transaksi (id_transaksi, id_baju, harga_baju) VALUES (?,?,?)");
         $tambahDetailStmt->bind_param('iid', $id_transaksi, $id_baju, $harga_baju);
 
-        $tambahDetailStmt->execute();
+        try {
+            $tambahDetailStmt->execute();
+        } catch (Exception $e) {
+            echo "<script>alert('baju sudah ada di dalam transaksi');</script>";
+        }
 
         $tambahTotalHargaStmt = $conn->prepare("UPDATE transaksi SET total_harga = total_harga + ? WHERE id_transaksi = ?");
         $tambahTotalHargaStmt->bind_param('di', $harga_baju, $id_transaksi);
@@ -62,14 +66,12 @@
                 <td>Rp<?php echo $transaksi->total_harga ?></td>
             </tr>
             <tr>
-                <td>---</td>
-                <td>---</td>
-                <td>---</td>
+                <td colspan="3">Baju yang dibeli : </td>
             </tr>
             <?php foreach ($details as $i => $detail): ?>
                 <tr>
                     <td><?php echo $i + 1 ?></td>
-                    <td><?php echo $detail[1] ?></td>
+                    <td>Rp<?php echo $detail[1] ?></td>
                     <td><?php echo $detail[2] ?></td>
                 </tr>
             <?php endforeach ?>
