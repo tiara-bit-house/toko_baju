@@ -1,0 +1,32 @@
+CREATE DATABASE toko_baju;
+USE toko_baju;
+
+CREATE TABLE transaksi (
+	id_transaksi INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+	total_harga DOUBLE NOT NULL DEFAULT 0
+);
+
+CREATE TABLE baju (
+	id_baju INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+	nama VARCHAR(80) NOT NULL,
+	harga_baju DOUBLE NOT null
+);
+
+
+INSERT INTO baju (nama, harga_baju)
+VALUES
+('Billabong', 100000),
+('Pollo', 150000),
+('Barong', 80000);
+
+CREATE TABLE detail_transaksi(
+	id_transaksi INT NOT NULL,
+	id_baju INT NOT null,
+	harga_baju DOUBLE NOT NULL,
+	PRIMARY KEY (id_transaksi, id_baju)
+);
+
+
+INSERT INTO transaksi (total_harga) VALUES (0);
+
+SELECT * FROM transaksi;
